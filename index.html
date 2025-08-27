@@ -15,9 +15,8 @@
       font-weight: 500;
       font-size: 16px;
       line-height: 1;
-      text-align: center;
+      height: 40px;
       overflow: hidden;
-      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -25,16 +24,19 @@
   </style>
 </head>
 <body>
-  Sua visita é a de n. <span id="contador">0</span>
+  <div id="conteudo">Você é o visitante n. —</div>
 
   <script>
     fetch('https://api.countapi.xyz/hit/siteVesmidia/contadorExpoTeste')
-      .then(r => r.json())
-      .then(d => {
-        document.getElementById('contador').textContent = d.value;
+      .then(response => {
+        if (!response.ok) throw new Error('Falha na API');
+        return response.json();
+      })
+      .then(data => {
+        document.getElementById('conteudo').textContent = `Você é o visitante n. ${data.value}`;
       })
       .catch(() => {
-        document.getElementById('contador').textContent = '—';
+        document.getElementById('conteudo').textContent = 'Você é o visitante n. —';
       });
   </script>
 </body>
